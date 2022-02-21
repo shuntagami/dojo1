@@ -6,4 +6,4 @@ run:
 
 .PHONY: clean
 clean:
-	rm -rf ./converted/*
+	rm -rf ./result/*
