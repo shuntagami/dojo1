@@ -73,7 +73,7 @@ func (c *ConverterClient) Convert(targetDirName string) error {
 				defer targetFile.Close()
 
 				// ./result配下にPROJECT_ROOT_DIR名を含める必要ないためカットする
-				destDir := filepath.Join("./result/", pathToTargetDir[len(c.RootDir):])
+				destDir := filepath.Join(c.RootDir, "result", pathToTargetDir[len(c.RootDir):])
 				pathToDestFile := filepath.Join(destDir, name+c.To)
 
 				// ディレクトリ作成
