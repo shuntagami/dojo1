@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  app:
+    image: golang
+    environment:
+      PROJECT_ROOT_DIR: /workspace
+      TIME_LIMIT: 10
+    volumes:
+      - .:/workspace
+      - go-data:/go
+    working_dir: /workspace
+volumes:
+  go-data:
