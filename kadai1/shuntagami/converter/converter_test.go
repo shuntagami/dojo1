@@ -5,6 +5,9 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"reflect"
+	"sort"
+	"strings"
 	"testing"
 
 	"github.com/shuntagami/dojo1/kadai1/shuntagami/converter"
@@ -33,8 +36,30 @@ func TestConvert_sample_from_png_to_jpg(t *testing.T) {
 	}
 
 	// 実行
-	if err := converter.Client.Convert(targetDirName); err != nil {
-		t.Errorf("actual: %v, expected: %v", err, nil)
+	out := captureStdout(func() {
+		converter.Client.Convert(targetDirName)
+	})
+	out = strings.TrimSuffix(out, "")
+
+	// stdout 確認
+	outToSlice := strings.Split(out, "\n")
+	if len(outToSlice) != 8 {
+		t.Errorf("actual: %v, expected: %v", len(outToSlice), 8)
+	}
+	expectedOuts := []string{
+		"Successfully converted /workspace/sample/sample2/sample3/dojo4.png, to /workspace/result/sample/sample2/sample3/dojo4.jpg",
+		"Successfully converted /workspace/sample/sample2/dojo3.png, to /workspace/result/sample/sample2/dojo3.jpg",
+		"Successfully converted /workspace/sample/sample4/sample5/dojo6.PNG, to /workspace/result/sample/sample4/sample5/dojo6.jpg",
+		"Successfully converted /workspace/sample/sample4/dojo2.png, to /workspace/result/sample/sample4/dojo2.jpg",
+		"Successfully converted /workspace/sample/sample4/dojo5.png, to /workspace/result/sample/sample4/dojo5.jpg",
+		"Successfully converted /workspace/sample/dojo1.png, to /workspace/result/sample/dojo1.jpg",
+		"Successfully converted /workspace/sample/dojo2.png, to /workspace/result/sample/dojo2.jpg",
+		"",
+	}
+	sort.Strings(outToSlice)
+	sort.Strings(expectedOuts)
+	if !reflect.DeepEqual(outToSlice, expectedOuts) {
+		t.Errorf("actual: %v, expected: %v", outToSlice, expectedOuts)
 	}
 
 	// /workspace/result/sample 配下のファイル数を確認
