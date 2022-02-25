@@ -26,3 +26,10 @@ $ cd $PROJECT_ROOT/kadai1/shuntagami/
 $ make test
 ok  	github.com/shuntagami/dojo1/kadai1/shuntagami/converter	0.730s
 ```
+
+## See test coverage
+
+```
+$ cd $PROJECT_ROOT/kadai1/shuntagami/
+$ make cover
+```
