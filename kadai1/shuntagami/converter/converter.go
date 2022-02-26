@@ -51,7 +51,7 @@ func Initialize(from, to, rootDir string) error {
 
 // Convert converts files under targetDir recursively
 func (c *ConverterClient) Convert(targetDirName string) error {
-	pathToTargetDir, err := helper.Fullpath(targetDirName)
+	pathToTargetDir, err := helper.Fullpath(c.RootDir, targetDirName)
 	if err != nil {
 		return err
 	}
@@ -60,10 +60,10 @@ func (c *ConverterClient) Convert(targetDirName string) error {
 		return err
 	}
 
-	// ターゲットディレクトリ配下の画像ファイルをループして形式変換する
 	ch := make(chan string)
 	var wg sync.WaitGroup
 
+	// ターゲットディレクトリ配下の画像ファイルをループして形式変換する
 	for _, file := range files {
 		if !file.IsDir() {
 			extension := strings.ToLower(filepath.Ext(file.Name()))

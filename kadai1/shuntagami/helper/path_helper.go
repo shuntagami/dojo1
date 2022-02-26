@@ -11,8 +11,8 @@ import (
 Fullpath returns a full path of specific directory under sample.
 @example /workspace/sample/sample2
 */
-func Fullpath(dirname string) (fullpath string, err error) {
-	err = filepath.WalkDir(filepath.Join("/workspace", "sample"), func(path string, info fs.DirEntry, err error) error {
+func Fullpath(root, dirname string) (fullpath string, err error) {
+	err = filepath.WalkDir(filepath.Join(root, "sample"), func(path string, info fs.DirEntry, err error) error {
 		if err != nil {
 			return errors.Wrap(err, "failed filepath.WalkDir")
 		}
