@@ -1,0 +1,15 @@
+name: TEST
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: test kadai1,kadai2
+        run: |
+          cd kadai1/shuntagami && make test
